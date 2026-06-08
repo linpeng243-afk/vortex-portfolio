@@ -571,6 +571,22 @@ export default class VortexGallery {
     return bestIdx;
   }
 
+  switchTo(dir: number) {
+    const len = this.imageInfos.length;
+    if (len === 0) return;
+    if (this.switching) return;
+
+    this.switching = true;
+    this.currentImageIndex = ((this.currentImageIndex + dir) % len + len) % len;
+    this.scrollY.direction = dir;
+    this.scrollY.target += this.stepSize * dir;
+    this.scrollY.speedTarget += this.stepSize * dir;
+
+    setTimeout(() => {
+      this.switching = false;
+    }, 500);
+  }
+
   destroy() {
     this.disposed = true;
     if (this.autoPlayTimer) clearTimeout(this.autoPlayTimer);
