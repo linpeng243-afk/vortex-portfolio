@@ -49,6 +49,39 @@ export interface ThemePage {
   subtitle: string;
 }
 
+export interface GalleryItemImage {
+  src: string;
+  size: "large" | "medium" | "small" | "wide";
+}
+
+export interface ProjectSection {
+  number: string;
+  title: string;
+  enTitle: string;
+  images: GalleryItemImage[];
+  descriptionZh: string;
+  descriptionEn: string;
+}
+
+export interface AboutConfig {
+  label: string;
+  headline: string;
+  paragraphs: string[];
+  skills: string[];
+}
+
+export interface AigcConfig {
+  brandLabel: string;
+  year: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroGlow: string;
+  about: AboutConfig;
+  projects: ProjectSection[];
+  footerTitle: string;
+  footerTagline: string;
+}
+
 export const siteConfig: SiteConfig = {
   language: "zh-CN",
   brandName: "VORTEX",
@@ -288,4 +321,100 @@ export const galleryConfig: GalleryConfig = {
       description: "樱花双重曝光。年轻亚洲女性的侧脸与盛开的樱花枝条 seamless 融合，柔和的粉色调中人与自然的边界消融。 delicate, poetic, a meditation on ephemeral beauty。",
     },
   ],
+};
+
+export const aigcConfig: AigcConfig = {
+  brandLabel: "AIGC Portfolio",
+  year: "2024",
+  heroTitle: "PORTFOLIO",
+  heroSubtitle: "AIGC Visual Designer",
+  heroGlow: "探索世界 · 设计未来",
+  about: {
+    label: "关于我 / ABOUT",
+    headline: "以AI为笔，以创意为墨，\n在数字与现实的边界书写视觉诗篇",
+    paragraphs: [
+      "我是一位专注于AIGC领域的视觉设计师，擅长将人工智能技术与艺术创意深度融合。通过AI生成、数字合成、超现实场景构建等手法，为时尚杂志、品牌商业项目打造前所未有的视觉体验。",
+      "作品多次刊登于《时尚芭莎》、《COSMOPOLITAN》、《时装L'OFFICIEL》、《新视线WONDERLAND》等顶级杂志，为多位知名艺人和品牌创造过令人难忘的视觉作品。",
+    ],
+    skills: ["AI生成", "视觉创意", "数字合成", "品牌形象", "杂志封面", "商业摄影", "超现实艺术"],
+  },
+  projects: [
+    {
+      number: "01",
+      title: "幻境漂流",
+      enTitle: "Fantasy Drift",
+      images: [
+        { src: "/images/editorial_cover_01.jpg", size: "large" },
+        { src: "/images/editorial_cover_02.jpg", size: "medium" },
+        { src: "/images/portrait_study_01.jpg", size: "small" },
+        { src: "/images/portrait_study_02.jpg", size: "small" },
+        { src: "/images/cinematic_01.jpg", size: "wide" },
+        { src: "/images/cinematic_02.jpg", size: "wide" },
+      ],
+      descriptionZh: "以《少年派的奇幻漂流》为灵感，联手Dior打造\"Fantasy Drift\"昼夜双章。运用AI+CG技术，将梦境化为可触的现实，在橘色云霞与深蓝夜幕间，编织一场关于意识与自然的视觉寓言。",
+      descriptionEn: "Inspired by \"Life of Pi,\" I collaborated with Dior to craft \"Fantasy Drift\" in two chapters: Dawn and Dusk. Using AI+CG technology, dreams become tangible reality, weaving a visual allegory of consciousness and nature between tangerine clouds and deep blue twilight.",
+    },
+    {
+      number: "02",
+      title: "塑料海洋",
+      enTitle: "A Plastic Ocean",
+      images: [
+        { src: "/images/portrait_study_03.jpg", size: "medium" },
+        { src: "/images/editorial_cover_03.jpg", size: "large" },
+        { src: "/images/cinematic_03.jpg", size: "wide" },
+        { src: "/images/cinematic_04.jpg", size: "wide" },
+        { src: "/images/portrait_study_04.jpg", size: "small" },
+        { src: "/images/portrait_study_05.jpg", size: "small" },
+      ],
+      descriptionZh: "意识与自然之间有一片无路大海。用AI构建一个由塑料垃圾构成的超现实海洋世界，在美丽的假象下，隐藏着对海洋污染的深刻警示。每年约1100万吨塑料进入海洋，到2050年，海洋中的塑料可能比鱼还多。",
+      descriptionEn: "Between consciousness and nature lies an impassable ocean. Using AI to construct a surreal ocean world made of plastic waste, beneath the beautiful illusion lies a profound warning about ocean pollution. Every year, approximately 11 million metric tons of plastic enter the oceans.",
+    },
+    {
+      number: "03",
+      title: "赛博烟花",
+      enTitle: "Cyber Fireworks",
+      images: [
+        { src: "/images/artistic_01.jpg", size: "large" },
+        { src: "/images/artistic_02.jpg", size: "medium" },
+        { src: "/images/artistic_03.jpg", size: "small" },
+        { src: "/images/artistic_04.jpg", size: "small" },
+        { src: "/images/fashion_campaign_01.jpg", size: "wide" },
+        { src: "/images/fashion_campaign_02.jpg", size: "wide" },
+      ],
+      descriptionZh: "用AI置景打造了一场没有污染的赛博电子烟花。在数字世界中重现烟花的绚烂，既保留了视觉的震撼，又避免了对环境的伤害。这是科技与环保的完美融合，也是对未来庆典方式的想象。",
+      descriptionEn: "Create a pollution-free cyber electronic fireworks display using AI scenery. Recreating the brilliance of fireworks in the digital world, preserving visual impact while avoiding environmental harm. A perfect fusion of technology and environmental protection.",
+    },
+    {
+      number: "04",
+      title: "废墟新生",
+      enTitle: "Rebirth from Ruins",
+      images: [
+        { src: "/images/portrait_study_06.jpg", size: "medium" },
+        { src: "/images/editorial_cover_04.jpg", size: "large" },
+        { src: "/images/fashion_campaign_03.jpg", size: "wide" },
+        { src: "/images/fashion_campaign_04.jpg", size: "wide" },
+        { src: "/images/editorial_cover_05.jpg", size: "small" },
+        { src: "/images/editorial_cover_06.jpg", size: "small" },
+      ],
+      descriptionZh: "一场梦，一段时空的穿梭，一切从梦醒开始。用AIGC技术构建超写实的废墟场景，以油画质感和细腻光影，讲述一个神圣与破败共存、毁灭与重生交织的爱情寓言。将坍塌的现实付之一炬，涅槃新生。",
+      descriptionEn: "A dream, a journey through time and space—it all begins upon awakening. Using AIGC to construct hyper-realistic ruin scenes with oil painting texture and delicate lighting, telling a love allegory of sacred and decay, destruction and rebirth.",
+    },
+    {
+      number: "05",
+      title: "如梦记",
+      enTitle: "Ru Meng Ji",
+      images: [
+        { src: "/images/editorial_cover_01.jpg", size: "large" },
+        { src: "/images/artistic_01.jpg", size: "medium" },
+        { src: "/images/artistic_02.jpg", size: "small" },
+        { src: "/images/artistic_03.jpg", size: "small" },
+        { src: "/images/cinematic_01.jpg", size: "wide" },
+        { src: "/images/cinematic_02.jpg", size: "wide" },
+      ],
+      descriptionZh: "以AI为笔，描绘深藏在每个中国人心中的奇幻浪漫侠义。将传统东方美学与超现实主义融合，在数字画布上重构一个既熟悉又陌生的梦境世界，致敬那份属于东方的诗意与浪漫。",
+      descriptionEn: "Using AI as a paintbrush to depict the fantastical romantic chivalry buried deep in the heart of every Chinese person. Merging traditional Eastern aesthetics with surrealism, reconstructing a dream world both familiar and strange on the digital canvas, paying tribute to Eastern poetry and romance.",
+    },
+  ],
+  footerTitle: "Thanks.",
+  footerTagline: "EXPLORE THE WORLD · DESIGN THE FUTURE",
 };

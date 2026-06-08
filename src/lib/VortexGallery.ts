@@ -159,7 +159,7 @@ export default class VortexGallery {
 
   constructor(canvas: HTMLCanvasElement, imagePaths: string[]) {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xffffff);
+    this.scene.background = new THREE.Color(0x0a0a0a);
 
     this.camera = new THREE.PerspectiveCamera(
       50,

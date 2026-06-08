@@ -1,0 +1,19 @@
+- generic [ref=e3]:
+  - generic:
+    - generic [ref=e5]: VORTEX
+    - link "关于" [ref=e6] [cursor=pointer]:
+      - /url: /info
+    - generic [ref=e7]:
+      - link "封面大片" [ref=e8] [cursor=pointer]:
+        - /url: /editorial
+      - link "人物肖像" [ref=e9] [cursor=pointer]:
+        - /url: /portrait
+      - link "时尚视觉" [ref=e10] [cursor=pointer]:
+        - /url: /fashion
+      - link "电影叙事" [ref=e11] [cursor=pointer]:
+        - /url: /cinematic
+      - link "艺术意境" [ref=e12] [cursor=pointer]:
+        - /url: /artistic
+    - generic: © 2026 VORTEX 视觉设计工作室
+  - generic:
+    - button "Close": ×

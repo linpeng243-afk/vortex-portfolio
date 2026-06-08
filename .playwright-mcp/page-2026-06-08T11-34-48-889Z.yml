@@ -1,0 +1,31 @@
+- generic [ref=e3]:
+  - link "VORTEX" [ref=e4] [cursor=pointer]:
+    - /url: /
+  - link "返回" [ref=e5] [cursor=pointer]:
+    - /url: /
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - paragraph [ref=e8]: 关于 — 独立视觉设计工作室
+      - heading "我们用镜头捕捉那些无法言说的瞬间。" [level=1] [ref=e9]
+      - generic [ref=e10]:
+        - paragraph [ref=e11]: VORTEX 成立于2019年，是一家专注于高端时尚摄影与视觉叙事的工作室。我们相信每一张照片都应该是一个完整的世界——有情绪、有张力、有留白的想象空间。从杂志封面到品牌campaign，从人物肖像到实验艺术，我们的创作跨越多种视觉语言。
+        - paragraph [ref=e12]: 工作室目前设有五大创作板块：封面大片以国际化的时尚嗅觉服务顶级刊物；人物肖像追求真实与美的平衡点；时尚视觉为品牌打造具有记忆点的campaign；电影叙事将影像与故事深度融合；艺术意境则探索摄影作为当代艺术媒介的边界。
+        - paragraph [ref=e13]: 我们与国内外众多杂志、品牌及艺人保持长期合作，作品曾刊登于 Vogue、Harper's Bazaar、GQ 等刊物。团队由资深摄影师、造型师、后期艺术家组成，全程把控从概念到成片的每一个环节。
+    - generic [ref=e14]:
+      - paragraph [ref=e15]: 联系我们
+      - generic [ref=e16]:
+        - term [ref=e17]: 邮箱
+        - definition [ref=e18]:
+          - link "hello@vortex-studio.com" [ref=e19] [cursor=pointer]:
+            - /url: mailto:hello@vortex-studio.com
+        - term [ref=e20]: 微信
+        - definition [ref=e21]: VORTEX_Studio
+        - term [ref=e22]: 小红书
+        - definition [ref=e23]:
+          - link "@VORTEX视觉工作室" [ref=e24] [cursor=pointer]:
+            - /url: https://www.xiaohongshu.com
+        - term [ref=e25]: 工作室
+        - definition [ref=e26]:
+          - generic [ref=e27]: 上海市静安区愚园路546号
+          - text: 北京市朝阳区酒仙桥路2号
+      - generic [ref=e28]: © 2026 VORTEX 视觉设计工作室
