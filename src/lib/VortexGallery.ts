@@ -120,7 +120,10 @@ export default class VortexGallery {
     aspectRatio: number;
     uvs: { xStart: number; xEnd: number; yStart: number; yEnd: number };
   }[] = [];
+  rawImages: HTMLImageElement[] = [];
   atlasTexture: THREE.Texture | null = null;
+  centerTexture: THREE.CanvasTexture | null = null;
+  centerCanvas: HTMLCanvasElement | null = null;
   instancedMaterial!: THREE.ShaderMaterial;
   centerMaterial!: THREE.ShaderMaterial;
   centerMesh: THREE.Mesh | null = null;
@@ -225,9 +228,9 @@ export default class VortexGallery {
     );
 
     // Resize each image to fit within the atlas grid while preserving aspect ratio.
-    // Target cell: 256x320 (4:5 portrait). Images are scaled-down copies.
-    const CELL_W = 256;
-    const CELL_H = 320;
+    // Target cell: 1024x1280 (4:5 portrait). Higher res for sharp center image.
+    const CELL_W = 1024;
+    const CELL_H = 1280;
     const cols = Math.ceil(Math.sqrt(images.length));
     const rows = Math.ceil(images.length / cols);
 
@@ -242,6 +245,7 @@ export default class VortexGallery {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, atlasWidth, atlasHeight);
 
+    this.rawImages = images;
     this.imageInfos = images.map((img, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
@@ -290,6 +294,7 @@ export default class VortexGallery {
     this.atlasTexture.generateMipmaps = true;
     this.atlasTexture.minFilter = THREE.LinearMipmapLinearFilter;
     this.atlasTexture.magFilter = THREE.LinearFilter;
+    this.atlasTexture.anisotropy = 16;
     this.atlasTexture.colorSpace = THREE.SRGBColorSpace;
   }
 
@@ -392,18 +397,26 @@ export default class VortexGallery {
   buildCenterMesh() {
     const geometry = new THREE.PlaneGeometry(2.2, 3.0);
 
+    const img = this.rawImages[this.currentImageIndex];
+    this.centerCanvas = document.createElement("canvas");
+    this.centerCanvas.width = img.naturalWidth || img.width;
+    this.centerCanvas.height = img.naturalHeight || img.height;
+    const ctx = this.centerCanvas.getContext("2d")!;
+    ctx.drawImage(img, 0, 0);
+
+    this.centerTexture = new THREE.CanvasTexture(this.centerCanvas);
+    this.centerTexture.generateMipmaps = false;
+    this.centerTexture.minFilter = THREE.LinearFilter;
+    this.centerTexture.magFilter = THREE.LinearFilter;
+    this.centerTexture.colorSpace = THREE.SRGBColorSpace;
+
     this.centerMaterial = new THREE.ShaderMaterial({
       vertexShader: centeredVertexShader,
       fragmentShader: centeredFragmentShader,
       uniforms: {
-        uAtlas: { value: this.atlasTexture },
+        uAtlas: { value: this.centerTexture },
         uTextureCoords: {
-          value: new THREE.Vector4(
-            this.imageInfos[0].uvs.xStart,
-            this.imageInfos[0].uvs.xEnd,
-            this.imageInfos[0].uvs.yStart,
-            this.imageInfos[0].uvs.yEnd
-          ),
+          value: new THREE.Vector4(0, 1, 1, 0),
         },
       },
       transparent: true,
@@ -459,14 +472,10 @@ export default class VortexGallery {
     }
 
     if (this.centerMaterial && this.imageInfos.length > 0) {
-      this.textureIndex = this.currentImageIndex;
-      const uvs = this.imageInfos[this.textureIndex].uvs;
-      this.centerMaterial.uniforms.uTextureCoords.value.set(
-        uvs.xStart,
-        uvs.xEnd,
-        uvs.yStart,
-        uvs.yEnd
-      );
+      if (this.textureIndex !== this.currentImageIndex) {
+        this.textureIndex = this.currentImageIndex;
+        this.updateCenterTexture(this.textureIndex);
+      }
     }
 
     this.renderer.render(this.scene, this.camera);
@@ -561,11 +570,28 @@ export default class VortexGallery {
     }, 500);
   }
 
+  private updateCenterTexture(index: number) {
+    if (!this.centerCanvas || !this.centerTexture) return;
+    const img = this.rawImages[index];
+    if (!img) return;
+    const w = img.naturalWidth || img.width;
+    const h = img.naturalHeight || img.height;
+    if (this.centerCanvas.width !== w || this.centerCanvas.height !== h) {
+      this.centerCanvas.width = w;
+      this.centerCanvas.height = h;
+    }
+    const ctx = this.centerCanvas.getContext("2d")!;
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(img, 0, 0);
+    this.centerTexture.needsUpdate = true;
+  }
+
   destroy() {
     this.disposed = true;
     if (this.autoPlayTimer) clearTimeout(this.autoPlayTimer);
     this.renderer.dispose();
     if (this.atlasTexture) this.atlasTexture.dispose();
+    if (this.centerTexture) this.centerTexture.dispose();
     if (this.instancedMaterial) this.instancedMaterial.dispose();
     if (this.centerMaterial) this.centerMaterial.dispose();
   }

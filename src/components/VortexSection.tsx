@@ -38,9 +38,9 @@ export default function VortexSection() {
         onMouseLeave={() => setHovered(null)}
         className="absolute z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10"
         style={{
-          left: "calc(50% - 180px)",
+          left: "calc(50% - 13.5vw)",
           top: "50%",
-          transform: "translateY(-50%)",
+          transform: "translate(-50%, -50%)",
           background: hovered === "left"
             ? "rgba(255, 77, 0, 0.2)"
             : "rgba(255, 255, 255, 0.08)",
@@ -59,9 +59,9 @@ export default function VortexSection() {
         onMouseLeave={() => setHovered(null)}
         className="absolute z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10"
         style={{
-          right: "calc(50% - 180px)",
+          left: "calc(50% + 15.5vw)",
           top: "50%",
-          transform: "translateY(-50%)",
+          transform: "translate(-50%, -50%)",
           background: hovered === "right"
             ? "rgba(255, 77, 0, 0.2)"
             : "rgba(255, 255, 255, 0.08)",
