@@ -30,7 +30,7 @@ export default function AboutSection() {
         >
           <div
             className="flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase mb-4"
-            style={{ color: "var(--accent)" }}
+            style={{ color: "#ff4d00" }}
           >
             <span style={{ display: "inline-block", width: "32px", height: "1px", background: "var(--accent)" }} />
             <span>01 / About</span>
@@ -63,7 +63,7 @@ export default function AboutSection() {
                   <span key={j}>
                     {part}
                     {j < parts.length - 1 && (
-                      <span style={{ color: "var(--accent)" }}>视觉</span>
+                      <span style={{ color: "#ff4d00" }}>视觉</span>
                     )}
                   </span>
                 ))}
@@ -108,7 +108,7 @@ export default function AboutSection() {
                 <span
                   className="font-mono"
                   style={{
-                    color: "var(--accent)",
+                    color: "#ff4d00",
                     fontSize: "10px",
                     letterSpacing: "0.1em",
                   }}

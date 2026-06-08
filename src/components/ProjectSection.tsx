@@ -53,7 +53,7 @@ function Project({ project, index }: { project: ProjectSection; index: number })
           style={{
             fontFamily: "'Playfair Display', serif",
             fontSize: "clamp(4rem, 8vw, 8rem)",
-            color: "var(--accent)",
+            color: "#ff4d00",
           }}
         >
           {project.number}
