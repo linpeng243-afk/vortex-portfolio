@@ -75,6 +75,7 @@ export interface AigcConfig {
   year: string;
   heroTitle: string;
   heroSubtitle: string;
+  heroGlowColor: string;
   heroGlow: string;
   about: AboutConfig;
   projects: ProjectSection[];
@@ -328,6 +329,7 @@ export const aigcConfig: AigcConfig = {
   year: "2024",
   heroTitle: "PORTFOLIO",
   heroSubtitle: "AIGC Visual Designer",
+  heroGlowColor: "rgba(255, 77, 0, 0.25)",
   heroGlow: "探索世界 · 设计未来",
   about: {
     label: "关于我 / ABOUT",

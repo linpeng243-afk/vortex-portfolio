@@ -23,7 +23,7 @@ export default function HeroSection() {
       <div
         className="absolute top-1/2 left-1/2 w-[60vw] h-[60vw] rounded-full pointer-events-none"
         style={{
-          background: `radial-gradient(circle, ${aigcConfig.heroGlow} 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${aigcConfig.heroGlowColor} 0%, transparent 70%)`,
           animation: "pulse-glow 8s ease-in-out infinite",
         }}
       />

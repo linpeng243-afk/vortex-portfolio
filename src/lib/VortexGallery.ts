@@ -151,8 +151,6 @@ export default class VortexGallery {
   private uZrange = 0;
   private disposed = false;
 
-  private accumulatedDelta = 0;
-  private switchThreshold = 80;
   private switching = false;
   private autoPlayTimer: ReturnType<typeof setTimeout> | null = null;
   private autoPlayInterval = 6000;
@@ -422,32 +420,8 @@ export default class VortexGallery {
       this.renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    window.addEventListener("wheel", (e) => {
+    window.addEventListener("wheel", () => {
       if (this.paused) return;
-
-      const dir = Math.sign(e.deltaY) || 1;
-      const len = this.imageInfos.length;
-      if (len === 0) return;
-
-      if (this.switching) return;
-
-      this.accumulatedDelta += Math.abs(e.deltaY);
-
-      if (this.accumulatedDelta < this.switchThreshold) return;
-
-      this.switching = true;
-      this.accumulatedDelta = 0;
-
-      this.currentImageIndex = ((this.currentImageIndex + dir) % len + len) % len;
-      this.scrollY.direction = dir;
-
-      this.scrollY.target += this.stepSize * dir;
-      this.scrollY.speedTarget += this.stepSize * dir;
-      this.startAutoPlay();
-
-      setTimeout(() => {
-        this.switching = false;
-      }, 500);
     });
   }
 
