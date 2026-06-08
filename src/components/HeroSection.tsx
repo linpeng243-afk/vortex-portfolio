@@ -47,7 +47,7 @@ export default function HeroSection() {
           style={{
             fontSize: "0.4em",
             letterSpacing: "0.1em",
-            color: "var(--accent)",
+            color: "#ff4d00",
           }}
         >
           {aigcConfig.heroSubtitle}
