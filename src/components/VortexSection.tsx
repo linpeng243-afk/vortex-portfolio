@@ -6,6 +6,8 @@ export default function VortexSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const galleryRef = useRef<VortexGallery | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (!canvasRef.current || galleryRef.current) return;
@@ -14,7 +16,19 @@ export default function VortexSection() {
     const gallery = new VortexGallery(canvasRef.current, images);
     galleryRef.current = gallery;
 
+    let raf = 0;
+    const tick = () => {
+      const idx = galleryRef.current?.currentImageIndex ?? 0;
+      setCurrentIndex((prev) => (prev === idx ? prev : idx));
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    const onLoad = () => setReady(true);
+    setTimeout(onLoad, 600);
+
     return () => {
+      cancelAnimationFrame(raf);
       gallery.destroy();
       galleryRef.current = null;
     };
@@ -24,6 +38,9 @@ export default function VortexSection() {
     galleryRef.current?.switchTo(dir);
   };
 
+  const total = galleryConfig.images.length;
+  const currentAlt = galleryConfig.images[currentIndex]?.title ?? "";
+
   return (
     <section id="vortex" className="relative" style={{ height: "100vh" }}>
       <canvas
@@ -31,6 +48,75 @@ export default function VortexSection() {
         className="w-full h-full block"
         style={{ touchAction: "none" }}
       />
+
+      <div
+        className="absolute z-10 pointer-events-none select-none"
+        style={{
+          top: "clamp(2rem, 5vh, 4rem)",
+          right: "clamp(1.5rem, 4vw, 3rem)",
+          opacity: ready ? 1 : 0,
+          transition: "opacity 1.2s ease",
+        }}
+      >
+        <div
+          className="text-right"
+          style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: "10px",
+            letterSpacing: "0.3em",
+            color: "var(--text-secondary)",
+            lineHeight: 1.6,
+          }}
+        >
+          <div style={{ color: "#ff4d00" }}>AIGC</div>
+          <div>{total} WORKS · 2024</div>
+          <div style={{ marginTop: "4px", opacity: 0.6 }}>
+            {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="absolute z-10 pointer-events-none"
+        style={{
+          left: "50%",
+          bottom: "clamp(2rem, 6vh, 4rem)",
+          transform: "translateX(-50%)",
+          textAlign: "center",
+          minWidth: "240px",
+        }}
+      >
+        <div
+          key={currentIndex}
+          style={{
+            animation: "fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "11px",
+              letterSpacing: "0.4em",
+              color: "#ff4d00",
+              textTransform: "uppercase",
+              marginBottom: "0.4rem",
+            }}
+          >
+            Now Showing · {String(currentIndex + 1).padStart(2, "0")}
+          </div>
+          <div
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(1.1rem, 1.6vw, 1.4rem)",
+              color: "var(--text-primary)",
+              letterSpacing: "0.05em",
+              fontStyle: "italic",
+            }}
+          >
+            {currentAlt}
+          </div>
+        </div>
+      </div>
 
       <button
         onClick={() => navigate(-1)}

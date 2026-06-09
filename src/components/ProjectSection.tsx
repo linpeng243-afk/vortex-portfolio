@@ -1,7 +1,7 @@
 import { useReveal } from "../hooks/use-reveal";
 import { aigcConfig, type ProjectSection } from "../config";
 
-function GalleryItem({ src, size }: { src: string; size: string }) {
+function GalleryItem({ src, size, index }: { src: string; size: string; index: number }) {
   const ref = useReveal<HTMLDivElement>();
 
   const sizeClasses: Record<string, string> = {
@@ -15,7 +15,10 @@ function GalleryItem({ src, size }: { src: string; size: string }) {
     <div
       ref={ref}
       className={`reveal relative overflow-hidden cursor-pointer transition-transform duration-500 hover:scale-[0.98] ${sizeClasses[size] || ""}`}
-      style={{ background: "var(--bg-secondary)" }}
+      style={{
+        background: "var(--bg-secondary)",
+        transitionDelay: `${index * 0.06}s`,
+      }}
     >
       <div
         className="absolute inset-0 z-10 transition-opacity duration-300 pointer-events-none"
@@ -37,6 +40,9 @@ function GalleryItem({ src, size }: { src: string; size: string }) {
 function Project({ project, index }: { project: ProjectSection; index: number }) {
   const headerRef = useReveal<HTMLDivElement>();
   const descRef = useReveal<HTMLDivElement>();
+  const numberRef = useReveal<HTMLDivElement>();
+
+  const numberChars = Array.from(project.number);
 
   return (
     <section
@@ -45,41 +51,54 @@ function Project({ project, index }: { project: ProjectSection; index: number })
       style={{ borderColor: "rgba(255,255,255,0.05)" }}
     >
       <div
-        ref={headerRef}
-        className="reveal px-12 max-w-[1400px] mx-auto mb-16 flex justify-between items-end max-md:flex-col max-md:items-start max-md:gap-4 max-md:px-6"
+        className="px-12 max-w-[1400px] mx-auto mb-16 max-md:px-6 flex items-end justify-between gap-6"
       >
         <div
-          className="font-black italic leading-none opacity-30"
+          ref={numberRef}
+          className="reveal font-black italic leading-none"
           style={{
             fontFamily: "'Playfair Display', serif",
             fontSize: "clamp(4rem, 8vw, 8rem)",
             color: "#ff4d00",
+            opacity: 0.15,
           }}
+          aria-label={project.number}
         >
-          {project.number}
+          {numberChars.map((ch, i) => (
+            <span
+              key={`n-${i}`}
+              className="inline-block char-stagger"
+              style={{ animationDelay: `${0.15 * i}s` }}
+            >
+              {ch}
+            </span>
+          ))}
         </div>
-        <div className="text-right max-md:text-left">
+        <div
+          ref={headerRef}
+          className="reveal text-right max-md:text-left"
+        >
           <h3
             className="text-3xl font-black mb-1"
             style={{ fontFamily: "'Noto Serif SC', serif" }}
           >
-            {project.title}
-          </h3>
-          <div
-            className="italic text-lg"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              color: "var(--text-secondary)",
-            }}
-          >
-            {project.enTitle}
+              {project.title}
+            </h3>
+            <div
+              className="italic text-lg"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                color: "var(--text-secondary)",
+              }}
+            >
+              {project.enTitle}
+            </div>
           </div>
-        </div>
       </div>
 
       <div className="grid grid-cols-12 gap-4 px-12 max-w-[1600px] mx-auto max-md:grid-cols-1 max-md:px-6">
         {project.images.map((img, i) => (
-          <GalleryItem key={i} src={img.src} size={img.size} />
+          <GalleryItem key={i} src={img.src} size={img.size} index={i} />
         ))}
       </div>
 

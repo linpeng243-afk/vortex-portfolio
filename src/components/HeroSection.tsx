@@ -14,6 +14,10 @@ export default function HeroSection() {
   const opacity = Math.max(0, 1 - scrollY / window.innerHeight);
   const translateY = scrollY * 0.3;
 
+  const titleChars = Array.from(aigcConfig.heroTitle);
+  const subtitleChars = Array.from(aigcConfig.heroSubtitle);
+  const taglineChars = Array.from(aigcConfig.heroGlow);
+
   return (
     <section
       ref={sectionRef}
@@ -38,10 +42,19 @@ export default function HeroSection() {
           lineHeight: 0.9,
           opacity,
           transform: `translateY(${translateY}px)`,
-          animation: "fadeUp 1.2s ease-out",
         }}
       >
-        {aigcConfig.heroTitle}
+        <span className="block" aria-label={aigcConfig.heroTitle}>
+          {titleChars.map((ch, i) => (
+            <span
+              key={`t-${i}`}
+              className="inline-block char-stagger"
+              style={{ animationDelay: `${0.04 * i}s` }}
+            >
+              {ch}
+            </span>
+          ))}
+        </span>
         <span
           className="block italic font-normal mt-2"
           style={{
@@ -49,8 +62,17 @@ export default function HeroSection() {
             letterSpacing: "0.1em",
             color: "#ff4d00",
           }}
+          aria-label={aigcConfig.heroSubtitle}
         >
-          {aigcConfig.heroSubtitle}
+          {subtitleChars.map((ch, i) => (
+            <span
+              key={`s-${i}`}
+              className="inline-block char-stagger"
+              style={{ animationDelay: `${0.4 + 0.035 * i}s` }}
+            >
+              {ch}
+            </span>
+          ))}
         </span>
       </h1>
 
@@ -58,10 +80,18 @@ export default function HeroSection() {
         className="absolute bottom-12 text-sm tracking-[0.4em] uppercase"
         style={{
           color: "var(--text-secondary)",
-          animation: "fadeIn 2s ease-out 0.5s both",
         }}
+        aria-label={aigcConfig.heroGlow}
       >
-        {aigcConfig.heroGlow}
+        {taglineChars.map((ch, i) => (
+          <span
+            key={`g-${i}`}
+            className="inline-block char-stagger char-stagger--fade"
+            style={{ animationDelay: `${1.0 + 0.06 * i}s` }}
+          >
+            {ch === " " ? "\u00A0" : ch}
+          </span>
+        ))}
       </p>
     </section>
   );

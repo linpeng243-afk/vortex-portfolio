@@ -81,6 +81,12 @@ export interface AigcConfig {
   projects: ProjectSection[];
   footerTitle: string;
   footerTagline: string;
+  footerContact: {
+    label: string;
+    email: string;
+    socials: { name: string; url: string }[];
+    copyright: string;
+  };
 }
 
 export const siteConfig: SiteConfig = {
@@ -413,4 +419,14 @@ export const aigcConfig: AigcConfig = {
   ],
   footerTitle: "Thanks.",
   footerTagline: "EXPLORE THE WORLD · DESIGN THE FUTURE",
+  footerContact: {
+    label: "Get in touch",
+    email: "hello@aigc.studio",
+    socials: [
+      { name: "Instagram", url: "#" },
+      { name: "Behance", url: "#" },
+      { name: "Xiaohongshu", url: "#" },
+    ],
+    copyright: "© 2024 — All works generated or directed by AI",
+  },
 };
