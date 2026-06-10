@@ -160,23 +160,41 @@ body::before {
   color: #ff4d00;
 }
 
-/* Custom cursor */
-.custom-cursor {
+/* Custom cursor — Dot + Ring + Trail */
+.custom-cursor-container {
   position: fixed;
   top: 0;
   left: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 77, 0, 0.6);
   pointer-events: none;
   z-index: 99999;
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-  transform: translate(-50%, -50%);
 }
-.custom-cursor.hovering {
-  width: 48px;
-  height: 48px;
-  border-color: #ff4d00;
-  background: rgba(255, 77, 0, 0.1);
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff4d00;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease;
+  z-index: 3;
+}
+.cursor-ring {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 77, 0, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              background 0.3s ease;
+  z-index: 2;
+}
+.cursor-trail {
+  position: fixed;
+  border-radius: 50%;
+  background: rgba(255, 77, 0, 0.4);
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
