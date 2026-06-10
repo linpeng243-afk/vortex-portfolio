@@ -16,6 +16,7 @@ const dots: Dot[] = [
     label: p.title,
     index: String(i + 3).padStart(2, "0"),
   })),
+  { id: "footer", label: "Contact", index: "08" },
 ];
 
 export default function ScrollIndicator() {

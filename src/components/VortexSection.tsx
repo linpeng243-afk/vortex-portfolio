@@ -42,7 +42,7 @@ export default function VortexSection() {
   const currentAlt = galleryConfig.images[currentIndex]?.title ?? "";
 
   return (
-    <section id="vortex" className="relative" style={{ height: "100vh" }}>
+    <section id="vortex" className="relative" style={{ height: "100vh", marginTop: "-1px" }}>
       <canvas
         ref={canvasRef}
         className="w-full h-full block"
@@ -159,6 +159,21 @@ export default function VortexSection() {
       >
         ›
       </button>
+      {/* Bottom gradient transition to About */}
+      <div
+        className="absolute bottom-0 left-0 w-full pointer-events-none z-20"
+        style={{
+          height: "180px",
+          background: "linear-gradient(to bottom, transparent 0%, var(--bg-primary) 100%)",
+        }}
+      />
+      {/* Vignette overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none z-20"
+        style={{
+          background: "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(10,10,10,0.7) 100%)",
+        }}
+      />
     </section>
   );
 }

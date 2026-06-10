@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { aigcConfig } from "../config";
+import useHeroParticles from "../hooks/use-hero-particles";
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+  const canvasRef = useHeroParticles(70);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -24,14 +26,14 @@ export default function HeroSection() {
       id="hero"
       className="relative h-screen flex flex-col justify-center items-center overflow-hidden"
     >
-      <div
-        className="absolute top-1/2 left-1/2 w-[60vw] h-[60vw] rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${aigcConfig.heroGlowColor} 0%, transparent 70%)`,
-          animation: "pulse-glow 8s ease-in-out infinite",
-        }}
+      {/* Canvas Particle Layer */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 1, mixBlendMode: "screen" }}
       />
 
+      {/* Text Content */}
       <h1
         className="relative z-10 text-center select-none"
         style={{
@@ -76,11 +78,10 @@ export default function HeroSection() {
         </span>
       </h1>
 
+      {/* Tagline */}
       <p
         className="absolute bottom-12 text-sm tracking-[0.4em] uppercase"
-        style={{
-          color: "var(--text-secondary)",
-        }}
+        style={{ color: "var(--text-secondary)", zIndex: 10 }}
         aria-label={aigcConfig.heroGlow}
       >
         {taglineChars.map((ch, i) => (
@@ -93,6 +94,46 @@ export default function HeroSection() {
           </span>
         ))}
       </p>
+
+      {/* Bottom Gradient Mask */}
+      <div
+        className="absolute bottom-0 left-0 w-full pointer-events-none"
+        style={{
+          height: "25%",
+          background: "linear-gradient(180deg, transparent 0%, #0a0a0a 100%)",
+          zIndex: 2,
+        }}
+      />
+
+      {/* Scroll Hint */}
+      <div
+        className="absolute z-10 flex flex-col items-center gap-2"
+        style={{
+          bottom: "clamp(1.5rem, 4vh, 3rem)",
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: "9px",
+            letterSpacing: "0.4em",
+            color: "var(--text-secondary)",
+            opacity: 0.5,
+          }}
+        >
+          SCROLL
+        </span>
+        <div
+          style={{
+            width: "1px",
+            height: "32px",
+            background: "linear-gradient(to bottom, rgba(255,77,0,0.6), transparent)",
+            animation: "scrollBounce 2s ease-in-out infinite",
+          }}
+        />
+      </div>
     </section>
   );
 }

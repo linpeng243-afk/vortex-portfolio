@@ -74,10 +74,6 @@ body::before {
   z-index: 9999;
 }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
-}
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(60px); }
@@ -110,4 +106,77 @@ body::before {
 .char-stagger--fade {
   transform: none;
   animation: fadeIn 0.9s ease-out both;
+}
+
+/* Image blur→clear reveal */
+.reveal-blur {
+  filter: blur(20px);
+  opacity: 0;
+  transform: scale(1.05);
+  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-blur.visible {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Card hover lift + shadow */
+.card-lift {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(255, 77, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Scroll hint breathing */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* Clip-path text reveal */
+@keyframes clipReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.clip-reveal {
+  clip-path: inset(0 100% 0 0);
+}
+.clip-reveal.visible {
+  animation: clipReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Drop cap */
+.drop-cap::first-letter {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.5rem;
+  margin-top: 0.1rem;
+  color: #ff4d00;
+}
+
+/* Custom cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 77, 0, 0.6);
+  pointer-events: none;
+  z-index: 99999;
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+.custom-cursor.hovering {
+  width: 48px;
+  height: 48px;
+  border-color: #ff4d00;
+  background: rgba(255, 77, 0, 0.1);
 }

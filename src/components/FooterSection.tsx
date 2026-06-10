@@ -9,6 +9,7 @@ export default function FooterSection() {
   return (
     <footer
       ref={ref}
+      id="footer"
       className="reveal py-32 px-6 border-t relative overflow-hidden"
       style={{ borderColor: "rgba(255,255,255,0.05)" }}
     >

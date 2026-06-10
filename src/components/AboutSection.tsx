@@ -75,7 +75,7 @@ export default function AboutSection() {
             {about.paragraphs.map((p, i) => (
               <p
                 key={i}
-                className="mb-7 last:mb-0"
+                className={`mb-7 last:mb-0 ${i === 0 ? "drop-cap" : ""}`}
                 style={{
                   fontFamily: i === 0 ? "'Noto Serif SC', serif" : "'Space Mono', monospace",
                   fontSize: i === 0 ? "1.05rem" : "0.82rem",
@@ -102,8 +102,23 @@ export default function AboutSection() {
             {about.skills.map((skill, i) => (
               <li
                 key={skill}
-                className="flex items-baseline gap-3 text-xs tracking-widest"
-                style={{ color: "var(--text-primary)" }}
+                className="skill-tilt flex items-baseline gap-3 text-xs tracking-widest cursor-default transition-all duration-300"
+                style={{
+                  color: "var(--text-primary)",
+                  perspective: "600px",
+                  transformStyle: "preserve-3d",
+                }}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
+                  const y = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+                  e.currentTarget.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${y}deg) scale(1.04)`;
+                  e.currentTarget.style.textShadow = "0 0 20px rgba(255, 77, 0, 0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "perspective(600px) rotateY(0deg) rotateX(0deg) scale(1)";
+                  e.currentTarget.style.textShadow = "none";
+                }}
               >
                 <span
                   className="font-mono"
