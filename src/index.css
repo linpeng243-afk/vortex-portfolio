@@ -198,3 +198,47 @@ body::before {
   transform: translate(-50%, -50%);
   z-index: 1;
 }
+
+/* === Mobile / Touch Device Overrides === */
+@media (pointer: coarse) {
+  .custom-cursor-container {
+    display: none !important;
+  }
+  body {
+    cursor: auto !important;
+  }
+  .card-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .reveal-blur {
+    filter: none;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@media (max-width: 768px) {
+  .drop-cap::first-letter {
+    font-size: 2.5rem;
+  }
+}
+
+/* Reduced motion: disable all decorative animations */
+@media (prefers-reduced-motion: reduce) {
+  .char-stagger,
+  .char-stagger--fade,
+  .reveal,
+  .reveal-blur,
+  .clip-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+  .card-lift:hover {
+    transform: none;
+  }
+}

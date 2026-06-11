@@ -14,6 +14,7 @@ function GalleryItem({ src, size, index }: { src: string; size: string; index: n
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;

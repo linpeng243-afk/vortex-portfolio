@@ -2,13 +2,20 @@ import { useEffect, useRef } from "react";
 
 const TRAIL_COUNT = 5;
 
+const isTouchDevice = () =>
+  typeof window !== "undefined" &&
+  (window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768);
+
 export default function useCustomCursor() {
   const containerRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const trailRefs = useRef<HTMLDivElement[]>([]);
+  const isMobile = isTouchDevice();
 
   useEffect(() => {
+    if (isMobile) return;
+
     const dot = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;
@@ -103,7 +110,7 @@ export default function useCustomCursor() {
         el.removeEventListener("mouseleave", onLeave);
       });
     };
-  }, []);
+  }, [isMobile]);
 
-  return { containerRef, dotRef, ringRef, trailRefs, TRAIL_COUNT };
+  return { containerRef, dotRef, ringRef, trailRefs, TRAIL_COUNT, isMobile };
 }

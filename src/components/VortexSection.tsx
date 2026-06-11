@@ -46,7 +46,7 @@ export default function VortexSection() {
       <canvas
         ref={canvasRef}
         className="w-full h-full block"
-        style={{ touchAction: "none" }}
+        style={{ touchAction: "pan-y" }}
       />
 
       <div
@@ -83,7 +83,7 @@ export default function VortexSection() {
           bottom: "clamp(2rem, 6vh, 4rem)",
           transform: "translateX(-50%)",
           textAlign: "center",
-          minWidth: "240px",
+          minWidth: "200px",
         }}
       >
         <div
@@ -122,9 +122,11 @@ export default function VortexSection() {
         onClick={() => navigate(-1)}
         onMouseEnter={() => setHovered("left")}
         onMouseLeave={() => setHovered(null)}
-        className="absolute z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10"
+        onTouchStart={() => setHovered("left")}
+        onTouchEnd={() => setHovered(null)}
+        className="absolute z-10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10 max-md:w-12 max-md:h-12"
         style={{
-          left: "calc(50% - 13.5vw)",
+          left: "min(calc(50% - 13.5vw), calc(100% - 70px))",
           top: "50%",
           transform: "translate(-50%, -50%)",
           background: hovered === "left"
@@ -143,9 +145,11 @@ export default function VortexSection() {
         onClick={() => navigate(1)}
         onMouseEnter={() => setHovered("right")}
         onMouseLeave={() => setHovered(null)}
-        className="absolute z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10"
+        onTouchStart={() => setHovered("right")}
+        onTouchEnd={() => setHovered(null)}
+        className="absolute z-10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10 max-md:w-12 max-md:h-12"
         style={{
-          left: "calc(50% + 15.5vw)",
+          left: "max(calc(50% + 15.5vw), 70px)",
           top: "50%",
           transform: "translate(-50%, -50%)",
           background: hovered === "right"

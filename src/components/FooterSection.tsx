@@ -96,7 +96,7 @@ export default function FooterSection() {
             {footerTagline}
           </p>
 
-          <div className="flex items-center" style={{ gap: "2rem" }}>
+          <div className="flex items-center flex-wrap justify-center" style={{ gap: "2rem" }}>
             {footerContact.socials.map((s) => (
               <a
                 key={s.name}

@@ -18,6 +18,10 @@ export default function useHeroParticles(count = 70) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const isMobile = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
+    const particleCount = isMobile ? Math.min(count, 25) : count;
+    const maxDpr = isMobile ? 2 : window.devicePixelRatio;
+
     let w = 0;
     let h = 0;
     let particles: Particle[] = [];
@@ -29,13 +33,19 @@ export default function useHeroParticles(count = 70) {
     let glowY = -1000;
 
     function resize() {
-      w = canvas!.width = window.innerWidth;
-      h = canvas!.height = window.innerHeight;
+      const dpr = Math.min(maxDpr, window.devicePixelRatio);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas!.width = w * dpr;
+      canvas!.height = h * dpr;
+      canvas!.style.width = `${w}px`;
+      canvas!.style.height = `${h}px`;
+      ctx!.scale(dpr, dpr);
     }
 
     function init() {
       resize();
-      particles = Array.from({ length: count }, () => ({
+      particles = Array.from({ length: particleCount }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.5,
@@ -110,13 +120,15 @@ export default function useHeroParticles(count = 70) {
       mouseX = e.clientX;
       mouseY = e.clientY;
     };
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    if (!isMobile) {
+      window.addEventListener("mousemove", onMouseMove, { passive: true });
+    }
 
     return () => {
       cancelAnimationFrame(raf);
       observer.disconnect();
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouseMove);
+      if (!isMobile) window.removeEventListener("mousemove", onMouseMove);
     };
   }, [count]);
 

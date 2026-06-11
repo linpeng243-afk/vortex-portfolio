@@ -436,6 +436,24 @@ export default class VortexGallery {
     window.addEventListener("wheel", () => {
       if (this.paused) return;
     });
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const canvas = this.renderer.domElement;
+
+    canvas.addEventListener("touchstart", (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    canvas.addEventListener("touchend", (e: TouchEvent) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        this.switchTo(dx > 0 ? -1 : 1);
+      }
+    }, { passive: true });
   }
 
   addScrollDelta(delta: number) {

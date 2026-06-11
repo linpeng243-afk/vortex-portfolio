@@ -14,7 +14,8 @@ export default function HeroSection() {
   }, []);
 
   const opacity = Math.max(0, 1 - scrollY / window.innerHeight);
-  const translateY = scrollY * 0.3;
+  const isMobile = typeof window !== "undefined" && (window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768);
+  const translateY = isMobile ? 0 : scrollY * 0.3;
 
   const titleChars = Array.from(aigcConfig.heroTitle);
   const subtitleChars = Array.from(aigcConfig.heroSubtitle);
@@ -24,7 +25,8 @@ export default function HeroSection() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative h-screen flex flex-col justify-center items-center overflow-hidden"
+      className="relative h-screen flex flex-col justify-center items-center overflow-hidden select-none"
+      style={{ WebkitTapHighlightColor: "transparent" }}
     >
       {/* Canvas Particle Layer */}
       <canvas
@@ -38,7 +40,7 @@ export default function HeroSection() {
         className="relative z-10 text-center select-none"
         style={{
           fontFamily: "'Playfair Display', serif",
-          fontSize: "clamp(4rem, 15vw, 12rem)",
+          fontSize: "clamp(2.5rem, 12vw, 12rem)",
           fontWeight: 900,
           letterSpacing: "-0.02em",
           lineHeight: 0.9,
@@ -117,7 +119,7 @@ export default function HeroSection() {
         <span
           style={{
             fontFamily: "'Space Mono', monospace",
-            fontSize: "9px",
+            fontSize: "clamp(9px, 2.5vw, 12px)",
             letterSpacing: "0.4em",
             color: "var(--text-secondary)",
             opacity: 0.5,

@@ -7,6 +7,7 @@ export default function AboutSection() {
   const headlineRef = useReveal<HTMLDivElement>();
   const bodyRef = useReveal<HTMLDivElement>();
   const skillsRef = useReveal<HTMLDivElement>();
+  const skillsDesktopRef = useReveal<HTMLDivElement>();
   const { about } = aigcConfig;
 
   return (
@@ -16,17 +17,10 @@ export default function AboutSection() {
       className="reveal relative py-32 px-12 max-md:py-20 max-md:px-6"
       style={{ background: "var(--bg-primary)" }}
     >
-      <div
-        className="max-w-[1440px] mx-auto"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 2.4fr 1fr",
-          gap: "4rem",
-        }}
-      >
+      <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-[1fr_2.4fr_1fr] gap-6 md:gap-16">
         <aside
           ref={metaRef}
-          className="reveal sticky top-24 self-start"
+          className="reveal md:sticky md:top-24 md:self-start hidden md:block"
         >
           <div
             className="flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase mb-4"
@@ -89,9 +83,34 @@ export default function AboutSection() {
               </p>
             ))}
           </div>
+
+          {/* Mobile: skills inline after paragraphs */}
+          <div ref={skillsRef} className="reveal mt-8 md:hidden">
+            <div
+              className="text-[10px] tracking-[0.4em] uppercase mb-3"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Practice
+            </div>
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {about.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="text-sm"
+                  style={{
+                    fontFamily: "'Noto Serif SC', serif",
+                    color: "var(--text-secondary)",
+                  }}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
         </article>
 
-        <div ref={skillsRef} className="reveal self-start pt-52 max-md:pt-8">
+        {/* Desktop: skills sidebar */}
+        <div ref={skillsDesktopRef} className="reveal self-start pt-52 hidden md:block">
           <div
             className="text-[10px] tracking-[0.4em] uppercase mb-6"
             style={{ color: "var(--text-secondary)" }}
